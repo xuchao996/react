@@ -4,11 +4,13 @@ import Input from "./components/input";
 import List from "./components/list";
 
 import store from "./store/index";
+import axios from "axios";
 
 import {
   ADD_ITEM_ACTION,
   CHANGE_INPUT_ACTION,
-  DELETE_ITEM_ACTION
+  DELETE_ITEM_ACTION,
+  getListAction
 } from "./store/actionCreators";
 
 class TodoList extends Component {
@@ -25,7 +27,15 @@ class TodoList extends Component {
     this.deleteItem = this.deleteItem.bind(this);
     this.sub = store.subscribe(this.storeChange);
   }
-  // componentWillMount() {}
+  componentWillMount() {
+    axios
+      .get(
+        "https://www.easy-mock.com/mock/5cfcce489dc7c36bd6da2c99/xiaojiejie/getList"
+      )
+      .then(res => {
+        store.dispatch(getListAction(res.data.data.list));
+      });
+  }
   componentWillUnmount() {
     this.sub();
   }

@@ -1,18 +1,22 @@
-import { ADD_ITEM, DELETE_ITEM } from "../actionTypes";
+import { ADD_ITEM, DELETE_ITEM, GET_LIST } from "../actionTypes";
 
 const listDefault = ["早上...", "晚上..."];
 
 export default (state = listDefault, action) => {
   const { type, value } = action;
-  console.log(state, action);
+  // console.log(action);
+  var newList = [];
   switch (type) {
     case ADD_ITEM:
-      var newList = [...state, value];
+      newList = [...state, value];
       return newList;
     case DELETE_ITEM:
-      var newList = [...state];
+      newList = [...state];
       newList.splice(value, 1);
       // redux immuutable
+      return newList;
+    case GET_LIST:
+      newList = [...value];
       return newList;
     default:
       break;
